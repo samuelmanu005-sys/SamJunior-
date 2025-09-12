@@ -1,0 +1,177 @@
+// InvestmentLandingPage.jsx
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+
+// Animated Feature Card Component
+function Card({ title, text }) {
+  return (
+    <motion.div
+      className="rounded-xl p-6 border bg-white shadow-sm cursor-pointer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.03, boxShadow: "0px 10px 20px rgba(0,0,0,0.12)" }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3 }}
+    >
+      <h3 className="font-semibold text-lg">{title}</h3>
+      <p className="mt-2 text-slate-600 text-sm">{text}</p>
+    </motion.div>
+  );
+}
+
+export default function InvestmentLandingPage() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const plans = [
+    { name: "Starter", deposit: "100 GH", daily: "6 GH" },
+    { name: "Bronze", deposit: "200 GH", daily: "9.47 GH" },
+    { name: "Silver", deposit: "550 GH", daily: "39.7 GH" },
+    { name: "Gold", deposit: "1,400 GH", daily: "94.4 GH" },
+    { name: "Platinum", deposit: "2,600 GH", daily: "200.8 GH" },
+  ];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const subject = encodeURIComponent("Investor inquiry from " + email);
+    const body = encodeURIComponent(
+      message || "I would like to know more about investment opportunities."
+    );
+    window.location.href = `mailto:b.owusumens@gmail.com?subject=${subject}&body=${body}`;
+    setSubmitted(true);
+  };
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+    setMobileMenuOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-slate-900 antialiased">
+      {/* Header */}
+      <header className="border-b bg-white/60 backdrop-blur sticky top-0 z-30">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollTo("top")}>
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-600 to-emerald-400 flex items-center justify-center text-white font-bold">A</div>
+            <div>
+              <div className="font-semibold">APEX INVESTORS</div>
+              <div className="text-xs text-slate-500">Your Peak Investment Partner</div>
+            </div>
+          </div>
+
+          {/* Desktop nav */}
+          <nav className="hidden md:flex gap-6 items-center text-sm text-slate-700">
+            <button onClick={() => scrollTo("features")} className="hover:underline">Why Us</button>
+            <button onClick={() => scrollTo("plans")} className="hover:underline">Plans</button>
+            <button onClick={() => scrollTo("contact")} className="hover:underline">Contact</button>
+            <button className="px-4 py-2 rounded-lg bg-green-600 text-white shadow hover:bg-green-700 transition">Get Started</button>
+          </nav>
+
+          {/* Mobile menu toggle */}
+          <div className="md:hidden">
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              {mobileMenuOpen ? "✖" : "☰"}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile nav */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t shadow-md">
+            <button onClick={() => scrollTo("features")} className="block w-full text-left px-6 py-3 hover:bg-gray-100">Why Us</button>
+            <button onClick={() => scrollTo("plans")} className="block w-full text-left px-6 py-3 hover:bg-gray-100">Plans</button>
+            <button onClick={() => scrollTo("contact")} className="block w-full text-left px-6 py-3 hover:bg-gray-100">Contact</button>
+            <button className="block w-full text-left px-6 py-3 bg-green-600 text-white hover:bg-green-700 transition">Get Started</button>
+          </div>
+        )}
+      </header>
+
+      <main id="top" className="max-w-6xl mx-auto px-6 py-8">
+        {/* Hero Section */}
+        <motion.div className="bg-gradient-to-r from-emerald-600 to-green-500 text-white rounded-xl p-6 shadow mb-8"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}
+        >
+          <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4 items-center">
+            <div className="text-lg font-bold">💥🌟 APEX INVESTORS 🌟💥</div>
+            <div className="text-sm">
+              <div>MINIMUM DEPOSIT: <span className="font-semibold">100 GH</span></div>
+              <div>MINIMUM WITHDRAWAL: <span className="font-semibold">50 GH</span></div>
+              <div>REGISTRATION BONUS: <span className="font-semibold">5 GH</span></div>
+            </div>
+            <div className="text-sm">
+              <div>WITHDRAWAL CHARGES: <span className="font-semibold">5%</span></div>
+              <div>REFERRAL COMMISSION: <span className="font-semibold">7%</span></div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Hero + Dashboard */}
+        <section className="grid md:grid-cols-2 gap-10 items-center">
+          <motion.div initial={{ x: -50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
+            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">Grow Your Wealth with Confidence</h1>
+            <p className="mt-4 text-lg text-slate-600">Join thousands of investors building their future with diversified portfolios, clear returns, and trusted support.</p>
+            <div className="mt-6 flex gap-3">
+              <button onClick={() => scrollTo("plans")} className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">Start Investing</button>
+              <button onClick={() => scrollTo("features")} className="inline-flex items-center gap-2 border px-4 py-2 rounded-lg hover:bg-gray-100 transition">Learn More</button>
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-4 text-sm text-slate-500">
+              <div className="flex items-center gap-2">🔒 Bank-Level Security</div>
+              <div className="flex items-center gap-2">🤝 Trusted by 10k+ Clients</div>
+              <div className="flex items-center gap-2">📊 Transparent Returns</div>
+            </div>
+          </motion.div>
+
+          <motion.div initial={{ x: 50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.6 }} className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-lg border">
+            <div className="w-full h-64 rounded-lg overflow-hidden bg-[url('https://images.unsplash.com/photo-1556741533-411cf82e4e2d?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3')] bg-cover bg-center"></div>
+            <div className="mt-4">
+              <h3 className="font-semibold">Your Portfolio Dashboard</h3>
+              <p className="text-sm text-slate-500 mt-1">Track growth, monitor risk, and receive real-time insights on your investments.</p>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Features */}
+        <section id="features" className="mt-12">
+          <h2 className="text-2xl font-bold">Why Choose APEX INVESTORS</h2>
+          <p className="text-slate-600 mt-2">We combine technology and expertise to maximize your returns safely.</p>
+          <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card title="Diversified Portfolios" text="Invest across stocks, ETFs, bonds, and vetted opportunities." />
+            <Card title="Clear Returns" text="Daily return schedules so you know what to expect." />
+            <Card title="Low Fees" text="Transparent withdrawal charge: 5%." />
+            <Card title="Secure Platform" text="256-bit encryption and fraud protection." />
+            <Card title="Referral Program" text="Earn 7% commission for referring others." />
+            <Card title="Fast Withdrawals" text="Minimum withdrawal: 50 GH — processed per our terms." />
+          </div>
+        </section>
+
+        {/* Investment Plans */}
+        <section id="plans" className="mt-12">
+          <h2 className="text-2xl font-bold">Investment Plans — Daily Payouts</h2>
+          <p className="text-slate-600 mt-2">Choose the deposit tier that fits your goals. Daily returns are shown next to each plan.</p>
+          <div className="mt-6 grid md:grid-cols-3 gap-6">
+            {plans.map((p) => (
+              <motion.div
+                key={p.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.03, boxShadow: "0px 10px 20px rgba(0,0,0,0.12)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3 }}
+                className="rounded-xl p-6 border bg-white shadow-sm cursor-pointer"
+              >
+                <div className="flex items-baseline gap-3">
+                  <div className="text-2xl font-bold">{p.deposit}</div>
+                  <div className="text-sm text-slate-500">{p.name}</div>
+                </div>
+                <div className="mt-4 text-sm text-slate-600">Daily Payout: <span className="font-semibold">{p.daily}</span></div>
+                <ul className="mt-4 text-sm text-slate-600 space-y-2">
+                  <li>Minimum deposit: 100 GH</li>
+                  <li>Registration bonus: 5 GH</li>
+                  <li>Withdrawal charge: 5%</li>
+                  <li>Referral: 7% commission</li>
+                </ul>
+                <div className="mt-6">
+                  <button className="w-full py-2 rounded-lg bg
