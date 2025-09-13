@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>APEX INVESTORS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+<!-- REGISTER PAGE -->
+<section id="register" class="page min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+    <h1 class="text-2xl font-bold text-center text-green-600">APEX INVESTORS</h1>
+    <p class="text-center text-gray-500 mt-1">Create your account to start earning</p>
+
+    <form id="registerForm" class="space-y-4">
+      <div>
+        <label class="text-sm text-gray-600">Phone Number</label>
+        <input id="regPhone" type="tel" required placeholder="0537204339"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Email</label>
+        <input id="regEmail" type="email" required placeholder="example@mail.com"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Password</label>
+        <input id="regPassword" type="password" required placeholder="Create password"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Confirm Password</label>
+        <input id="regConfirm" type="password" required placeholder="Re-enter password"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+
+      <button type="submit" class="w-full py-3 bg-emerald-600 text-white rounded-lg font-medium">Register & Continue</button>
+      <p class="text-center text-sm text-gray-500 mt-2">
+        Already have an account? <button type="button" onclick="showPage('login')" class="text-emerald-600 font-medium">Login</button>
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- LOGIN PAGE -->
+<section id="login" class="page hidden min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+    <h2 class="text-2xl font-semibold text-center text-emerald-600">Welcome Back</h2>
+    <p class="text-center text-gray-500 mt-1">Login to your APEX INVESTORS account</p>
+
+    <form id="loginForm" class="space-y-4 mt-6">
+      <div>
+        <label class="text-sm text-gray-600">Phone or Email</label>
+        <input id="loginIdentifier" type="text" required placeholder="phone or email"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Password</label>
+        <input id="loginPassword" type="password" required placeholder="password"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <button type="submit" class="py-2 px-4 bg-emerald-600 text-white rounded-lg font-medium">Login</button>
+        <button type="button" onclick="showPage('reset')" class="text-sm text-emerald-600">Forgot Password?</button>
+      </div>
+
+      <p class="text-center text-sm text-gray-500 mt-2">
+        No account? <button type="button" onclick="showPage('register')" class="text-emerald-600">Register</button>
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- DASHBOARD PAGE -->
+<section id="dashboard" class="page hidden min-h-screen p-6">
+  <div>Welcome, <span id="userMasked"></span></div>
+</section>
+
+<script>
+const app = { user: {} };
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+// Registration
+document.getElementById('registerForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const phone = document.getElementById('regPhone').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPassword').value;
+  const confirm = document.getElementById('regConfirm').value;
+  if(pass !== confirm){ alert("Passwords do not match!"); return; }
+  app.user.phone = phone;
+  app.user.email = email;
+  document.getElementById('userMasked').textContent = phone.replace(/(\d{4})\d+(\d{2})/, '$1****$2');
+  showPage('dashboard');
+});
+
+// Login
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const identifier = document.getElementById('loginIdentifier').value.trim();
+  if(/\d/.test(identifier)) app.user.phone = identifier;
+  else app.user.email = identifier;
+  document.getElementById('userMasked').textContent = app.user.phone?.replace(/(\d{4})\d+(\d{2})/, '$1****$2');
+  showPage('dashboard');
+});
+
+// Default page
+showPage('register');
+</script>
+</body>
+  </html>https://cdn.tailwindcss.com<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX INVESTORS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+<!-- REGISTER PAGE -->
+<section id="register" class="page min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+    <h1 class="text-2xl font-bold text-center text-green-600">APEX INVESTORS</h1>
+    <p class="text-center text-gray-500 mt-1">Create your account to start earning</p>
+
+    <form id="registerForm" class="space-y-4">
+      <div>
+        <label class="text-sm text-gray-600">Phone Number</label>
+        <input id="regPhone" type="tel" required placeholder="0537204339"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Email</label>
+        <input id="regEmail" type="email" required placeholder="example@mail.com"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Password</label>
+        <input id="regPassword" type="password" required placeholder="Create password"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Confirm Password</label>
+        <input id="regConfirm" type="password" required placeholder="Re-enter password"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+
+      <button type="submit" class="w-full py-3 bg-emerald-600 text-white rounded-lg font-medium">Register & Continue</button>
+      <p class="text-center text-sm text-gray-500 mt-2">
+        Already have an account? 
+        <button type="button" onclick="showPage('login')" class="text-emerald-600 font-medium">Login</button>
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- LOGIN PAGE -->
+<section id="login" class="page hidden min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+    <h2 class="text-2xl font-semibold text-center text-emerald-600">Welcome Back</h2>
+    <p class="text-center text-gray-500 mt-1">Login to your APEX INVESTORS account</p>
+
+    <form id="loginForm" class="space-y-4 mt-6">
+      <div>
+        <label class="text-sm text-gray-600">Phone or Email</label>
+        <input id="loginIdentifier" type="text" required placeholder="phone or email"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-600">Password</label>
+        <input id="loginPassword" type="password" required placeholder="password"
+          class="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+      </div>
+      <div class="flex justify-between items-center">
+        <button type="submit" class="py-2 px-4 bg-emerald-600 text-white rounded-lg font-medium">Login</button>
+        <button type="button" onclick="showPage('reset')" class="text-sm text-emerald-600">Forgot Password?</button>
+      </div>
+      <p class="text-center text-sm text-gray-500 mt-2">
+        No account? 
+        <button type="button" onclick="showPage('register')" class="text-emerald-600 font-medium">Register</button>
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page hidden min-h-screen p-6">
+  <div class="mb-4 text-lg font-semibold">
+    Welcome, <span id="userMasked"></span> | Referral Code: <span id="userReferral"></span>
+  </div>
+
+  <div class="mb-4 p-4 bg-white shadow rounded-lg">
+    <div class="flex justify-between">
+      <div>Total Balance: ₵<span id="userBalance">0</span></div>
+      <div>Today Revenue: ₵<span id="dailyRevenue">0</span></div>
+    </div>
+    <div class="flex gap-2 mt-2">
+      <button onclick="deposit()" class="bg-green-600 text-white px-3 py-1 rounded">Deposit</button>
+      <button onclick="withdraw()" class="bg-red-600 text-white px-3 py-1 rounded">Withdraw</button>
+    </div>
+  </div>
+
+  <h2 class="text-xl font-bold mb-2">Available Products</h2>
+  <div id="productList" class="grid gap-4"></div>
+</section>
+
+<script>
+  const app = {
+    user: { balance: 0, dailyRevenue: 0 },
+    products: [
+      { title: 'B1 ECU Quadruped Robot', price: 300, daily: 30, total: 900, cycle: '30 Days' },
+      { title: 'Expedition A1', price: 500, daily: 50, total: 1500, cycle: '30 Days' },
+      { title: 'D2 ECU Quadruped Robot', price: 60, daily: 6, total: 180, cycle: '30 Days' }
+    ]
+  };
+
+  function showPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    if(id==='dashboard') renderProducts();
+  }
+
+  function generateReferral(){ return 'REF'+Math.random().toString(36).substring(2,8).toUpperCase(); }
+  function maskPhone(p){ return p.replace(/(\d{4})\d+(\d{2})/, '$1****$2'); }
+
+  // REGISTER
+  document.getElementById('registerForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const phone = document.getElementById('regPhone').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const pass = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+
+    if(pass !== confirm){ alert("Passwords do not match!"); return; }
+
+    app.user.phone = phone;
+    app.user.email = email;
+    app.user.referral = generateReferral();
+
+    document.getElementById('userMasked').textContent = maskPhone(phone);
+    document.getElementById('userReferral').textContent = app.user.referral;
+    document.getElementById('userBalance').textContent = app.user.balance;
+    document.getElementById('dailyRevenue').textContent = app.user.dailyRevenue;
+    showPage('dashboard');
+  });
+
+  // LOGIN
+  document.getElementById('loginForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const identifier = document.getElementById('loginIdentifier').value.trim();
+    if(/\d/.test(identifier)) app.user.phone = identifier;
+    else app.user.email = identifier;
+    if(!app.user.referral) app.user.referral = generateReferral();
+
+    document.getElementById('userMasked').textContent = maskPhone(app.user.phone||"User");
+    document.getElementById('userReferral').textContent = app.user.referral;
+    document.getElementById('userBalance').textContent = app.user.balance;
+    document.getElementById('dailyRevenue').textContent = app.user.dailyRevenue;
+    showPage('dashboard');
+  });
+
+  // DEPOSIT
+  function deposit(){
+    const amount = Number(prompt("Enter amount to deposit:")) || 0;
+    if(amount <=0){ alert("Invalid amount"); return; }
+    app.user.balance += amount;
+    document.getElementById('userBalance').textContent = app.user.balance;
+    alert(`Deposit successful! New Balance: ₵${app.user.balance}`);
+  }
+
+  // WITHDRAW
+  function withdraw(){
+    const amount = Number(prompt("Enter amount to withdraw:")) || 0;
+    if(amount <=0){ alert("Invalid amount"); return; }
+    if(amount > app.user.balance){ alert("Insufficient balance"); return; }
+    app.user.balance -= amount;
+    document.getElementById('userBalance').textContent = app.user.balance;
+    alert(`Withdrawal successful! New Balance: ₵${app.user.balance}`);
+  }
+
+  // PRODUCTS
+  function renderProducts(){
+    const container = document.getElementById('productList');
+    container.innerHTML = '';
+    app.products.forEach((p,i)=>{
+      const card = document.createElement('div');
+      card.className = "p-4 bg-white shadow rounded-lg";
+      card.innerHTML = `
+        <div class="flex justify-between items-center mb-2">
+          <div class="font-semibold">${p.title}</div>
+          <div>₵${p.price}</div>
+        </div>
+        <div class="text-sm text-gray-600 mb-2">Daily: ₵${p.daily} | Total: ₵${p.total} | Cycle: ${p.cycle}</div>
+        <div class="flex gap-2">
+          <input type="number" value="1" min="1" id="qty${i}" class="border px-2 py-1 w-16 rounded"/>
+          <button class="bg-emerald-600 text-white px-3 py-1 rounded" onclick="buyProduct(${i})">Invest</button>
+        </div>`;
+      container.appendChild(card);
+    });
+  }
+
+  function buyProduct(idx){
+    const qty = Number(document.getElementById('qty'+idx).value) || 1;
+    const p = app.products[idx];
+    const totalCost = qty*p.price;
+    if(totalCost > app.user.balance){ alert("Insufficient balance for this investment"); return; }
+    app.user.balance -= totalCost;
+    app.user.dailyRevenue += qty*p.daily;
+    document.getElementById('userBalance').textContent = app.user.balance;
+    document.getElementById('dailyRevenue').textContent = app.user.dailyRevenue;
+    alert(`Invested ${qty} x ${p.title}. Remaining Balance: ₵${app.user.balance}`);
+  }
+
+  // DEFAULT PAGE
+  showPage('register');
+</script>
+</body>
+                                                     </html>app.user.balance+= amountapp.user.dailyRevenuecard.classNamep.totalcard.innerHTMLcontainer.innerHTMLapp.user.referral
