@@ -1,0 +1,266 @@
+Here’s your **entire project**, ready to copy into four files. Create a folder (e.g. `hutch-website`) and add these files inside.
+
+---
+
+### 1️⃣ **index.html** (Login Page)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUTCH - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>HUTCH</h1>
+    <label for="phone">Phone Number</label>
+    <input type="text" id="phone" value="0537204339">
+
+    <label for="password">Password</label>
+    <input type="password" id="password">
+
+    <button onclick="login()">Login</button>
+    <div class="link">
+      <a href="#" onclick="register()">Create Account</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+```
+
+---
+
+### 2️⃣ **dashboard.html** (Dashboard)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUTCH - Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>Welcome to HUTCH Dashboard</header>
+  <div class="content">
+    <div class="balance">Current Balance: <span id="balance">GHS 50.00</span></div>
+
+    <label for="amount">Recharge Amount</label>
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <button onclick="recharge()">Recharge</button>
+
+    <h3 style="margin-top:2rem;">Available Products</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Daily Income</th>
+          <th>Total Income</th>
+          <th>Buy</th>
+        </tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+
+    <div class="transactions">
+      <h3>Recent Transactions</h3>
+      <ul id="transactions"></ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+```
+
+---
+
+### 3️⃣ **style.css** (Styling)
+```css
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7fbff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+header {
+  background: #0b76e6;
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 90%;
+  margin-top: 10%;
+}
+.content {
+  margin-top: 2rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  max-width: 900px;
+  width: 90%;
+}
+.balance {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: #055fbf;
+}
+label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+button {
+  margin-top: 1.2rem;
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(90deg, #0b76e6, #055fbf);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.6rem;
+  text-align: center;
+}
+th {
+  background: #0b76e6;
+  color: white;
+}
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+.buy-btn {
+  background: #055fbf;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border: none;
+}
+.transactions ul {
+  list-style: none;
+  padding: 0;
+}
+.transactions li {
+  background: #f1f6fc;
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+```
+
+---
+
+### 4️⃣ **script.js** (Logic)
+```javascript
+let balance = 50.0;
+let transactions = [];
+
+const products = [
+  { name: "S1 PRO HODL", price: 50, daily: 7, total: 315 },
+  { name: "S1K PRO HODL", price: 150, daily: 24, total: 1080 },
+  { name: "S2 PRO HODL", price: 350, daily: 63, total: 2835 },
+  { name: "S2K PRO HODL", price: 700, daily: 140, total: 6300 },
+  { name: "S3 PRO HODL", price: 1500, daily: 310, total: 13950 }
+];
+
+function login() {
+  window.location.href = "dashboard.html";
+}
+
+function register() {
+  alert("Registration is simulated. Please log in.");
+}
+
+function recharge() {
+  const amt = parseFloat(document.getElementById("amount").value);
+  if (!amt || amt <= 0) return alert("Enter a valid amount");
+  balance += amt;
+  updateBalance();
+  addTransaction(`Recharged GHS ${amt.toFixed(2)}`);
+  document.getElementById("amount").value = "";
+}
+
+function updateBalance() {
+  const el = document.getElementById("balance");
+  if (el) el.textContent = `GHS ${balance.toFixed(2)}`;
+}
+
+function addTransaction(text) {
+  transactions.unshift(text);
+  const list = document.getElementById("transactions");
+  if (list) {
+    list.innerHTML = transactions.map(t => `<li>${t}</li>`).join("");
+  }
+}
+
+function renderProducts() {
+  const table = document.getElementById("productTable");
+  if (!table) return;
+  table.innerHTML = products.map((p, i) => `
+    <tr>
+      <td>${p.name}</td>
+      <td>GHS ${p.price}</td>
+      <td>GHS ${p.daily}</td>
+      <td>GHS ${p.total}</td>
+      <td><button class="buy-btn" onclick="buyProduct(${i})">Buy</button></td>
+    </tr>`).join("");
+}
+
+function buyProduct(index) {
+  const product = products[index];
+  if (balance < product.price) return alert("Not enough balance!");
+  balance -= product.price;
+  updateBalance();
+  addTransaction(`Purchased ${product.name} for GHS ${product.price}`);
+}
+
+// Auto-render if on dashboard
+window.onload = () => {
+  updateBalance();
+  renderProducts();
+};
+```
+
+---
+
+✅ **How to use:**
+1. Put these four files in the same folder.
+2. Open `index.html` in your browser — you can log in, recharge, and buy products.
+3. Transactions update instantly, and balance adjusts correctly.
+    
